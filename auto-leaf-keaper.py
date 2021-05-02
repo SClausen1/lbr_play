@@ -22,7 +22,7 @@ def mouse_mover(record):
     while True:
         mouse.play(record)
 
-def main_loop(record):
+def moouse_main_loop(record):
     click_listener_thread = threading.Thread(target=mouse.wait, args=('left','double'))
 
     click_listener_thread.start()
@@ -30,7 +30,3 @@ def main_loop(record):
     while click_listener_thread.is_alive():
         mouse.play(record)
 
-
-        
-if __name__=="__main__":
-    mouse_script()
