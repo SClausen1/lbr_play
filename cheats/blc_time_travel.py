@@ -13,64 +13,72 @@ import time
 
 import requests
 from urllib.request import urlopen
-
+from helpers import set_time
 
 pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
+def main_loop():
+    click_listener_thread = threading.Thread(target=keyboard.wait, args=('enter'))
+    print('press enter to stop BLC Time Travl')
+    click_listener_thread.start()
+    
+    while click_listener_thread.is_alive():
+        time_travel()
+     
 
+def time_travel():
+    with mss.mss() as sct:
+        # Part of the screen to capture
+        monitor = {"top": 40, "left": 0, "width": 1500, "height": 800}
 
+        while "Screen capturing":
+            
 
-with mss.mss() as sct:
-    # Part of the screen to capture
-    monitor = {"top": 40, "left": 0, "width": 1500, "height": 800}
-
-    while "Screen capturing":
+            # Get raw pixels from the screen, save it to a Numpy array
+            print('Grabbing screen in {}' 5)
+            time.sleep(5)   
+            # invert image, to get black text
+            inverted_img = invert_screenshot(sct.grab(monitor))
         
+            time_dict = extract_relevant_text(pytesseract.image_to_string(inverted_img))
 
-        # Get raw pixels from the screen, save it to a Numpy array
-        print('Grabbing screen in 5')
-        time.sleep(5)   
-        img = np.array(sct.grab(monitor))
-        greyscale_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        inverted_img = cv2.bitwise_not(greyscale_img)
-        cv2.imshow("Image", inverted_img)
-        # Display the picture
-        text = pytesseract.image_to_string(inverted_img)
-        lines = text.splitlines()
-        try:
-            index = lines.index("Orb of ELC fon")
-        except ValueError:
-            print(text)
-            break
-        
-        line = lines[index + 2].split
-        print(line)
-        time = line[line.index('in')+1:]
-        timeDict = {}
-        time_remaining = 0
+            seconds = dict_to_seconds
+            
+            set_time._win_set_time(seconds)
+            time.sleep(20)
+  
 
-        for i in range(len(time), step=2):
-            timeDict[time[i+1]] = time[i]
-
-        for key in timeDict.keys:
+def dict_to_seconds(time_dict)
+    for key in time_dicts.keys:
             if key == 'seconds':
-                time_remaining += int(timeDict.get(key))
+                time_remaining += int(time_dicts.get(key))
             elif key =='hours':
-                time_remaining += int(timeDict.get(key)) * 3600
+                time_remaining += int(time_dicts.get(key)) * 3600
             elif key == 'minutes':
-                time_remaining += int(timeDict.get(key)) * 60
+                time_remaining += int(time_dicts.get(key)) * 60
             else:
-                time_remaining += int(timeDict.get(key)) * 3600 * 24
-        time_desired = time.time() + time_remaining
-        time.localtime(time_desired)
+                time_remaining += int(time_dicts.get(key)) * 3600 * 24
+
+def extract_relevant_text(lines)
+    lines = text.splitlines()
+    try:
+        index = lines.index("Orb of ELC fon")
+    except ValueError:
         print(text)
         break
-        # Display the picture in grayscale
-        # cv2.imshow('OpenCV/Numpy grayscale',
-        #            cv2.cvtColor(img, cv2.COLOR_BGRA2GRAY))
+    
+    line = lines[index + 2].split
+    print(line)
+    time = line[line.index('in')+1:]
+    time_dict = {}
+    time_remaining = 0
 
-        # Press "q" to quit
-        if cv2.waitKey(25) & 0xFF == ord("q"):
-            cv2.destroyAllWindows()
-            break
+    for i in range(len(time), step=2):
+        time_dict[time[i+1]] = time[i]
+    return time_dict
 
+def invert_screenshot(screensthot):
+    img = np.array(screensthot))
+    greyscale_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    inverted_img = cv2.bitwise_not(greyscale_img)
+    cv2.imshow("Image", inverted_img)
