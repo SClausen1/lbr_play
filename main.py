@@ -18,7 +18,7 @@ def event_scheduler(keyboard_event):
     elif keyboard_event.name == '2':
         blc_time_travel.main_loop()
     elif keyboard_event.name == '3':
-        cheese_grind.mouse_script()
+        cheese_grind.main_loop()
     elif keyboard_event.name == '4':
         capture_mouse.main_script()
     semaphore = 1
@@ -28,7 +28,7 @@ def event_scheduler(keyboard_event):
 if __name__=="__main__":
 
     while True:
-        if semaaphore > 0 :
+        if semaphore > 0 :
             print('''1 for Auto Leaf Keaper \n2 for BLC Time Hacker \n3 for Cheese Grind\
                     \n4 for Mouse Capture Util \nesc to quit''')
             semaphore = 0
