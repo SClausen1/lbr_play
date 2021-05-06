@@ -1,15 +1,16 @@
 import unittest
 from helpers import set_time
-from _datetime import datetime
+from _datetime import datetime, timedelta
 
 class TestWinSetTime(unittest.TestCase):
     def test_5_min(self):
-        time = set_time.calculate_time(300)
-        self.assertEqual(len(time), 8)
-        self.assertEqual(time[5], datetime.now().minute + 5)
+        self.assertEqual( set_time.calculate_time(300).minute, (datetime.now().minute + 5) % 60)
         
     def test_1_hour(self):
-        self.assertEqual(set_time.calculate_time(3600)[4], datetime.now().hour + 1)
+        self.assertEqual(set_time.calculate_time(3600).hour, datetime.now().hour + 1)
+        hour_future = datetime.now() + timedelta(3600)
+
+        self.assertEqual(set_time.calculate_time(3600).hour, hour_future.hour)
 
 
 if __name__ == '__main__':
