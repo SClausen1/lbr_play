@@ -2,7 +2,7 @@ import mouse
 import threading 
 import sys
 
-from helpers.set_time import _win_set_time, time_tuple_create
+from helpers.set_time import _win_set_time
 import keyboard
 
 
@@ -10,7 +10,7 @@ def mouse_mover(record):
     while True:
         mouse.play(record)
 
-def mouse_main_loop():
+def main_loop():
     with open("recordings/auto_leaf_keaper.pkl", 'r') as input:
         record = pickle.load(input)
     click_listener_thread = threading.Thread(target=keyboard.wait, args=('enter'))
