@@ -1,6 +1,6 @@
 import sys
 sys.path.append('C:\\Users\\The Heart of Gold\\lbr_play')
-from cheats import auto_leaf_keeper, blc_time_travel, cheese_grind
+from cheats import auto_leaf_keeper, blc_time_travel, cheese_grind, faster_crunch, borb_claw_machine
 from helpers import set_time, capture_mouse
 
 import keyboard  
@@ -8,29 +8,33 @@ import keyboard
 import time
 
 semaphore = 1
+scripts = {
+    '1' : auto_leaf_keeper,
+    '2' : blc_time_travel,
+    '3' : cheese_grind,
+    '4' : faster_crunch,
+    '5' : borb_claw_machine,
+
+    '0' : capture_mouse
+}
 
 def event_scheduler(keyboard_event):
     if keyboard_event.name == 'esc':
         semaphore = -1
-        return
-    elif keyboard_event.name == '1':
-        auto_leaf_keeper.main_loop()
-    elif keyboard_event.name == '2':
-        blc_time_travel.main_loop()
-    elif keyboard_event.name == '3':
-        cheese_grind.main_loop()
-    elif keyboard_event.name == '4':
-        capture_mouse.main_script()
-    semaphore = 1
-    return
+    elif scripts.get(keyboard_event.name) == None:
+        print("Invalid Entry")
+    else:
+        semaphore = scripts[keyboard_event.name].main_loop()
+ 
 
         
 if __name__=="__main__":
 
     while True:
         if semaphore > 0 :
-            print('''1 for Auto Leaf Keaper \n2 for BLC Time Hacker \n3 for Cheese Grind\
-                    \n4 for Mouse Capture Util \nesc to quit''')
+            for k,v in scripts.items():
+                print('press ' + k + ' for ' + v.get_name())
+            print('press esc to quit')
             semaphore = 0
             keyboard.hook(event_scheduler) 
         elif semaphore == 0:
