@@ -1,4 +1,4 @@
-#lbr_play
+lbr_play
 
 This is a python script written to cheat, hack and optimize the playing and beating of the free to play Leaf Blower Revolution.
 
