@@ -2,10 +2,10 @@ import mouse
 import os
 import pickle
 
-def main_script():
+def main_loop():
     record = mouse_script()
     record_name = ""
-    print('What cheat is this for?\n1 for Auto Leaf Keaper \n2 for BLC Time Hacker')
+    print('What cheat is this for?\n1 for Auto Leaf Keaper \n2 for BLC Time Hacker\n3 for Cheese Grind\n:')
     cheat = input('What cheat is this for?\n1 for Auto Leaf Keaper \n2 for BLC Time Hacker\n3 for Cheese Grind\n: ')
     
     if cheat == '1':
@@ -19,8 +19,10 @@ def main_script():
 
     with open(record_name, 'wb') as output:
         pickle.dump(record, output, pickle.HIGHEST_PROTOCOL)
-    return
+    return 1
     
+def get_name():
+    return "Capture Mouse"
 # def record_namer(keyboard_event):
 #     record_name = ""
 
